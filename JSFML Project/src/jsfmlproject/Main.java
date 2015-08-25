@@ -1,12 +1,11 @@
 package jsfmlproject;
 
-import java.awt.Rectangle;
+
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-import org.jsfml.graphics.FloatRect;
-import org.jsfml.graphics.IntRect;
+
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -17,7 +16,7 @@ import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
-import org.jsfml.window.event.KeyEvent;
+
 
 public class Main {
 	public static void main(String args[]){
@@ -100,7 +99,7 @@ public class Main {
 
 		  //Handle events
 		    for(Event event : window.pollEvents()) {
-		    	KeyEvent keyEvent = event.asKeyEvent();
+		    	
 		        if(event.type == Event.Type.CLOSED) {
 		            //The user pressed the close button
 		            window.close();
@@ -135,7 +134,7 @@ public class Main {
 	public static boolean isColliding(ArrayList<Sprite> sprites, Sprite spriteA){
 		
 		boolean result = false;
-		int i = 0;
+		
 		for(Sprite sprite : sprites){
 			if(spriteA.getGlobalBounds().intersection(sprite.getGlobalBounds())!= null){
 				result = true;
