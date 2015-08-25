@@ -11,7 +11,9 @@ import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Clock;
+import org.jsfml.system.Time;
 import org.jsfml.system.Vector2f;
+import org.jsfml.window.Keyboard;
 import org.jsfml.window.Keyboard.Key;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -23,6 +25,7 @@ public class Main {
 		int PosX = 640;
 		int PosY = 360;
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
+		int speed = 50;
 		
 		//Create a Texture instance
 		Texture circle1 = new Texture();
@@ -44,9 +47,7 @@ public class Main {
 		    circle4.setSmooth(true);
 		    square.setSmooth(true);
 
-		    //Texture was loaded successfully - retrieve and print size
-		    //Vector2i size = fourchanLogoTexture.getSize();
-		    //System.out.println("The texture is " + size.x + "x" + size.y);
+		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
 		    ex.printStackTrace();
@@ -61,7 +62,6 @@ public class Main {
 		Sprite circle4_spr = new Sprite(circle4);
 		sprites.add(circle4_spr);
 		Sprite square_spr = new Sprite(square);
-		sprites.add(square_spr);
 
 		//Set its origin to its center and put it at the center of the screen
 		circle1_spr.setOrigin(Vector2f.div(new Vector2f(circle1.getSize()), 2));
@@ -93,6 +93,10 @@ public class Main {
 		    window.draw(circle4_spr);
 		    window.draw(square_spr);
 		    window.display();
+		    
+		    Time deltaTime = frameClock.restart();
+		    float deltaSeconds = deltaTime.asSeconds();
+		    
 
 		  //Handle events
 		    for(Event event : window.pollEvents()) {
@@ -100,60 +104,43 @@ public class Main {
 		        if(event.type == Event.Type.CLOSED) {
 		            //The user pressed the close button
 		            window.close();
-		        }else if(event.type == Event.Type.KEY_PRESSED && keyEvent.key == Key.LEFT){
-		        	square_spr.move(Vector2f.div(new Vector2f(square.getSize()), 2));
+		        }
+		    }
+		        if(Keyboard.isKeyPressed(Key.LEFT)){
 		        	if(!isColliding(sprites,square_spr)){
-		        		PosX -= 5;
-		        		square_spr.setPosition(PosX,PosY);
-		        	}else{
-		        		square_spr.setPosition(PosX, PosY);
+		        		square_spr.move(-(deltaSeconds * speed),0);
 		        	}
 		        	
-		        }else if(event.type == Event.Type.KEY_PRESSED && keyEvent.key == Key.RIGHT){
-		        	square_spr.move(Vector2f.div(new Vector2f(square.getSize()), 2));
-		        	PosX += 5;
-		        	square_spr.setPosition(PosX,PosY);
-//		        	if(!isColliding(sprites,square_spr)){
-//		        		square_spr.setPosition(PosX,PosY);
-//		        	}else{
-//		        		PosX -= 5;
-//		        		square_spr.setPosition(PosX, PosY);
-//		        	}
+		        }else if(Keyboard.isKeyPressed(Key.RIGHT)){
 		        	
-		        }else if(event.type == Event.Type.KEY_PRESSED && keyEvent.key == Key.UP){
-		        	square_spr.move(Vector2f.div(new Vector2f(square.getSize()), 2));
-		        	PosY -= 5;
-		        	square_spr.setPosition(PosX,PosY);
-//		        	if(!isColliding(sprites,square_spr)){
-//		        		square_spr.setPosition(PosX,PosY);
-//		        	}else{
-//		        		PosY += 5;
-//		        		square_spr.setPosition(PosX, PosY);
-//		        	}
+		        	if(!isColliding(sprites,square_spr)){
+		        		square_spr.move(deltaSeconds * speed,0);
+		        	}
 		        	
-		        }else if(event.type == Event.Type.KEY_PRESSED && keyEvent.key == Key.DOWN){
-		        	square_spr.move(Vector2f.div(new Vector2f(square.getSize()), 2));
-		        	PosY += 5;
-		        	square_spr.setPosition(PosX,PosY);
-//		        	if(!isColliding(sprites,square_spr)){
-//		        		square_spr.setPosition(PosX,PosY);
-//		        	}else{
-//		        		PosY -= 5;
-//		        		square_spr.setPosition(PosX, PosY);
-//		        	}
+		        }else if(Keyboard.isKeyPressed(Key.UP)){
+		        	
+		        	if(!isColliding(sprites,square_spr)){
+		        		square_spr.move(0,-(deltaSeconds * speed));
+		        	}
+		        	
+		        }else if(Keyboard.isKeyPressed(Key.DOWN)){
+		        	
+		        	if(!isColliding(sprites,square_spr)){
+		        		square_spr.move(0,deltaSeconds * speed);
+		        	}
 		        	
 		        }
 		    }
-		}
 	}
-	public static boolean isColliding(ArrayList<Sprite> sprites, Sprite spriteB){
+	public static boolean isColliding(ArrayList<Sprite> sprites, Sprite spriteA){
+		
 		boolean result = false;
+		int i = 0;
 		for(Sprite sprite : sprites){
-			if(spriteB.getGlobalBounds().intersection(sprite.getGlobalBounds())!= null){
+			if(spriteA.getGlobalBounds().intersection(sprite.getGlobalBounds())!= null){
 				result = true;
 				break;
 			}
-			
 		}
 		return result;
 	}
