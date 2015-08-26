@@ -21,10 +21,10 @@ import org.jsfml.window.event.Event;
 public class Main {
 	public static void main(String args[]){
 		
-		int PosX = 640;
-		int PosY = 360;
+		float PosX = 650;
+		float PosY = 360;
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-		int speed = 50;
+		int speed = 80;
 		
 		//Create a Texture instance
 		Texture circle1 = new Texture();
@@ -108,24 +108,40 @@ public class Main {
 		        if(Keyboard.isKeyPressed(Key.LEFT)){
 		        	if(!isColliding(sprites,square_spr)){
 		        		square_spr.move(-(deltaSeconds * speed),0);
+		        	}else{
+		        		PosX = square_spr.getPosition().x;
+		        		PosY = square_spr.getPosition().y;
+		        		square_spr.setPosition(PosX+10, PosY);
 		        	}
 		        	
 		        }else if(Keyboard.isKeyPressed(Key.RIGHT)){
 		        	
 		        	if(!isColliding(sprites,square_spr)){
 		        		square_spr.move(deltaSeconds * speed,0);
+		        	}else{
+		        		PosX = square_spr.getPosition().x;
+		        		PosY = square_spr.getPosition().y;
+		        		square_spr.setPosition(PosX-10, PosY);
 		        	}
 		        	
 		        }else if(Keyboard.isKeyPressed(Key.UP)){
 		        	
 		        	if(!isColliding(sprites,square_spr)){
 		        		square_spr.move(0,-(deltaSeconds * speed));
+		        	}else{
+		        		PosX = square_spr.getPosition().x;
+		        		PosY = square_spr.getPosition().y;
+		        		square_spr.setPosition(PosX, PosY+10);
 		        	}
 		        	
 		        }else if(Keyboard.isKeyPressed(Key.DOWN)){
 		        	
 		        	if(!isColliding(sprites,square_spr)){
 		        		square_spr.move(0,deltaSeconds * speed);
+		        	}else{
+		        		PosX = square_spr.getPosition().x;
+		        		PosY = square_spr.getPosition().y;
+		        		square_spr.setPosition(PosX, PosY-10);
 		        	}
 		        	
 		        }
