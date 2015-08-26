@@ -4,8 +4,6 @@ package jsfmlproject;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-
-
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -21,8 +19,11 @@ import org.jsfml.window.event.Event;
 public class Main {
 	public static void main(String args[]){
 		
+		//Position of the square
 		float PosX = 650;
 		float PosY = 360;
+		
+		//List of sprite objects
 		ArrayList<Sprite> sprites = new ArrayList<Sprite>();
 		int speed = 80;
 		
@@ -48,10 +49,10 @@ public class Main {
 
 		    
 		} catch(IOException ex) {
-		    //Ouch! something went wrong
+		    //File not found error
 		    ex.printStackTrace();
 		}
-		//Create a sprite and make it use the texture
+		//Create a sprite, make it use the texture, and add it to the sprites list
 		Sprite circle1_spr = new Sprite(circle1);
 		sprites.add(circle1_spr);
 		Sprite circle2_spr = new Sprite(circle2);
@@ -62,7 +63,7 @@ public class Main {
 		sprites.add(circle4_spr);
 		Sprite square_spr = new Sprite(square);
 
-		//Set its origin to its center and put it at the center of the screen
+		//Set its origin to its center
 		circle1_spr.setOrigin(Vector2f.div(new Vector2f(circle1.getSize()), 2));
 		circle1_spr.setPosition(120,240);
 		circle2_spr.setOrigin(Vector2f.div(new Vector2f(circle2.getSize()), 2));
@@ -93,6 +94,7 @@ public class Main {
 		    window.draw(square_spr);
 		    window.display();
 		    
+		    //Sets the movement to be per second instead of per frame
 		    Time deltaTime = frameClock.restart();
 		    float deltaSeconds = deltaTime.asSeconds();
 		    
@@ -147,6 +149,7 @@ public class Main {
 		        }
 		    }
 	}
+	//Collision detection function
 	public static boolean isColliding(ArrayList<Sprite> sprites, Sprite spriteA){
 		
 		boolean result = false;
